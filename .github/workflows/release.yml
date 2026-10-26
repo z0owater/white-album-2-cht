@@ -1,0 +1,49 @@
+name: Build converter exe
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller==6.22.3
+
+      - name: Build exe
+        run: >
+          pyinstaller --noconfirm --onefile --windowed --name WA2-CHT-Converter
+          --add-data "data;data" --collect-data jieba --collect-all opencc app.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WA2-CHT-Converter
+          path: dist/WA2-CHT-Converter.exe
+
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/WA2-CHT-Converter.exe
+          body: |
+            ## 下載 / Download
+            `WA2-CHT-Converter.exe`：雙擊執行，選擇已安裝簡體中文補丁的遊戲資料夾，按「轉換」。
+            Double-click, choose the game folder with the Simplified Chinese patch installed, press Convert.
+
+            本程式不含任何遊戲檔案、譯文或字型；請支持正版 Leaf / AQUAPLUS。
+            Contains no game files, translations or fonts. Please buy the game from Leaf / AQUAPLUS.
+
+            翻譯 / Translation: CK-GAL中文化小组 (main game), WhiteAlbum2SpecialCHS (Special Contents). 詳見 README / see README.

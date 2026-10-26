@@ -49,6 +49,18 @@ def sha256(path):
     return h.hexdigest()
 
 
+def detect(folder):
+    """Supported (edition, folder) pairs in folder and its immediate subfolders."""
+    found = []
+    candidates = [folder] + sorted(os.path.join(folder, d) for d in os.listdir(folder)
+                                   if os.path.isdir(os.path.join(folder, d)))
+    for path in candidates:
+        for name, ed in EDITIONS.items():
+            if all(os.path.exists(os.path.join(path, f)) for f in ed['inputs']):
+                found.append((name, path))
+    return found
+
+
 def check_inputs(game, ed):
     for name, digest in ed['inputs'].items():
         path = os.path.join(game, name)

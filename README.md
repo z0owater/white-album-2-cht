@@ -25,7 +25,18 @@ everything is generated locally from your own copy of the game and the patch you
 工具會先檢查這些檔案的 SHA-256；版本不同就拒絕執行（字元對照表只對應這些版本）。
 The tool checks the SHA-256 of those files first and refuses to run on other versions (the character table only fits these).
 
-## 使用方法 / Usage
+## 使用方法（最簡單）/ Easiest way
+
+1. 先安裝好簡體中文補丁（見上表）。/ Install the Simplified Chinese patch first (see the table above).
+2. 到 [Releases](https://github.com/z0owater/white-album-2-cht/releases/latest) 下載 **`WA2-CHT-Converter.exe`**。/ Download **`WA2-CHT-Converter.exe`** from [Releases](https://github.com/z0owater/white-album-2-cht/releases/latest).
+3. 雙擊執行，選擇遊戲資料夾（本篇、Special Contents，或兩者的上層資料夾都可以），按「轉換」，約一到兩分鐘。也可以直接把資料夾拖到 exe 上。
+   Double-click it, choose the game folder (main game, Special Contents, or a folder containing both), press **Convert**; it takes a minute or two. You can also drop the folder onto the exe.
+4. 用 `WA2_cht.exe` / `WA2_Special_cht.exe` 啟動遊戲。/ Start the game with `WA2_cht.exe` / `WA2_Special_cht.exe`.
+
+> 這個 exe 沒有數位簽章，Windows 可能顯示「Windows 已保護您的電腦」：按「其他資訊 → 仍要執行」。它由本倉庫的程式碼在 GitHub Actions 上自動建置。
+> The exe is unsigned, so Windows SmartScreen may warn: click **More info → Run anyway**. It is built automatically from this repository's code by GitHub Actions.
+
+## 使用 Python / With Python
 
 需要 Windows（使用系統內建的「微軟雅黑」字型）與 Python 3.11 以上。
 Requires Windows (uses the bundled Microsoft YaHei font) and Python 3.11+.
